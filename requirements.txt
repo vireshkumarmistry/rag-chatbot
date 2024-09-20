@@ -1,0 +1,14 @@
+fastapi~=0.115.0
+uvicorn
+openai
+langchain~=0.3.0
+langchain-openai~=0.2.0
+langchain-community~=0.3.0
+pinecone-client[grpc]~=5.0.1
+PyPDF2~=3.0.1
+sentence-transformers~=3.1.0
+python-dotenv~=1.0.1
+python-multipart
+pydantic~=2.9.2
+starlette~=0.38.5
+tiktoken~=0.7.0
