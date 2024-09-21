@@ -50,7 +50,7 @@ rag-chatbot/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/rag-chatbot.git
+git clone https://github.com/vireshkumarmistry/rag-chatbot
 cd rag-chatbot
 ```
 
