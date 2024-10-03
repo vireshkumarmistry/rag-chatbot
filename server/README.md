@@ -116,6 +116,20 @@ uvicorn app.main:app --reload
 
 The server will be available at `http://127.0.0.1:8000`.
 
+### Using Docker
+
+1. **Build Docker Image:**
+
+   ```bash
+   docker build -t server .
+   ```
+
+2. **Run the Application in Docker:**
+
+   ```bash
+   docker run -p 8000:8000 server
+   ```
+
 ---
 
 ## API Endpoints
