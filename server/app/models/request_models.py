@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class ChatRequest(BaseModel):
+class PineconeVectorChatRequest(BaseModel):
     """
     A Pydantic model representing the structure of the chat request input.
 
@@ -12,3 +12,7 @@ class ChatRequest(BaseModel):
 
     query: str
     index_name: str
+
+
+class ChatRequest(BaseModel):
+    message: str

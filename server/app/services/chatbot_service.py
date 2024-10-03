@@ -1,13 +1,15 @@
+import openai
+import logging
+
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import Pinecone
 from langchain.chains.retrieval_qa.base import RetrievalQA
 from langchain_community.chat_models import ChatOpenAI
 
-from app.utils.config import OPENAI_API_KEY
-import logging
+from app.core.config import settings
 
 
-def chatbot_response(query, index_name):
+def pinecone_vector_service(query, index_name):
     """
     Generates a chatbot response for a given query using a retrieval-based
     question-answering (QA) model.
@@ -31,11 +33,11 @@ def chatbot_response(query, index_name):
                     or unexpected error occurs during the chatbot interaction.
     """
     try:
-        embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
+        embeddings = OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY)
         docsearch = Pinecone.from_existing_index(index_name, embeddings)
 
         qa_chain = RetrievalQA.from_chain_type(
-            llm=ChatOpenAI(model="gpt-4", openai_api_key=OPENAI_API_KEY),
+            llm=ChatOpenAI(model="gpt-4", openai_api_key=settings.OPENAI_API_KEY),
             chain_type="stuff",
             retriever=docsearch.as_retriever(),
         )
@@ -54,3 +56,25 @@ def chatbot_response(query, index_name):
     except Exception as e:
         logging.error(f"Error during chatbot response generation: {str(e)}")
         raise ValueError("An unexpected error occurred during the chatbot interaction.")
+
+
+def chat_bot(message: str):
+    try:
+        # Setting API Key
+        client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
+
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {
+                    "role": "user",
+                    "content": message
+                }
+            ]
+        )
+
+        return completion.choices[0].message.content
+    except Exception as exp:
+        logging.error(f"ChatBot OpenAI error: {str(exp)}")
+        raise Exception("Something went wrong!!! Please try again.")

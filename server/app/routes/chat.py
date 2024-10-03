@@ -2,20 +2,29 @@ from fastapi import APIRouter, HTTPException
 from starlette import status
 from starlette.responses import JSONResponse
 
-from app.models.request_models import ChatRequest
-from app.services.chatbot_service import chatbot_response
+from app.models.request_models import PineconeVectorChatRequest, ChatRequest
+from app.services.chatbot_service import pinecone_vector_service, chat_bot
 import logging
 
 router = APIRouter()
 
 
 @router.post("/")
-async def chat(chat_request: ChatRequest):
+async def chatbot(chat_request: ChatRequest):
+    try:
+        response = chat_bot(chat_request.message)
+        return JSONResponse(content={"message": response}, status_code=status.HTTP_200_OK)
+    except Exception:
+        raise HTTPException(status_code=500, detail="Something went wrong!! Please Try Again.")
+
+
+@router.post("/pinecone_vector_chat")
+async def pinecone_vector_chat(chat_request: PineconeVectorChatRequest):
     """
     Handles POST requests to the chatbot API, processes a user's query, and returns the chatbot's response.
 
     Args:
-        chat_request (ChatRequest): A request object containing the user's query and the Pinecone index name.
+        chat_request (PineconeVectorChatRequest): A request object containing the user's query and the Pinecone index name.
 
     Returns:
         JSONResponse: A JSON response containing the chatbot's message with HTTP status 200 if successful,
@@ -37,7 +46,7 @@ async def chat(chat_request: ChatRequest):
 
     """
     try:
-        response = chatbot_response(chat_request.query, chat_request.index_name.lower())
+        response = pinecone_vector_service(chat_request.query, chat_request.index_name.lower())
         if response:
             return JSONResponse(
                 content={"message": response}, status_code=status.HTTP_200_OK

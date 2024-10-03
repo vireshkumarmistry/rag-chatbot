@@ -3,11 +3,10 @@ import logging
 
 import pinecone
 from pinecone import Pinecone, ServerlessSpec
-from app.utils.config import PINECONE_API_KEY
-from utils.config import OPENAI_API_KEY
+from app.core.config import settings
 
-pc = Pinecone(api_key=PINECONE_API_KEY)
-openai.api_key = OPENAI_API_KEY
+pc = Pinecone(api_key=settings.PINECONE_API_KEY)
+openai.api_key = settings.OPENAI_API_KEY
 
 index_name = "text-embedding-ada-002"
 
