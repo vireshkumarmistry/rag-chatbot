@@ -2,22 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --container-bg: #1a1a1a;
+    --container-shadow: rgba(0, 0, 0, 0.6);
   }
 }
 
+:root {
+  --background: #1717176b;
+  --foreground: #171717;
+  --container-bg: #ffffff;
+}
+
 body {
-  color: var(--foreground);
   background: var(--background);
+  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.chat-container {
+  max-width: 800px;
+  margin: 50px auto;
+  width: 100%;
+  background: var(--container-bg);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 600px 150px rgb(28 27 27 / 66%);
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  overflow-y: auto;
 }
 
 @layer utilities {

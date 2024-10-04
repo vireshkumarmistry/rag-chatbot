@@ -8,10 +8,11 @@ type Message = {
   id: number;
   text: string;
   sender: 'user' | 'bot';
+  isHtml?: boolean;
 };
 
 const ChatBox = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([{ id: 0, text: "Hello! How can I assist you today?", sender: "bot" },]);
 
   const sendMessage = async (message: string) => {
     const userMessage: Message = {
@@ -36,18 +37,23 @@ const ChatBox = () => {
       id: messages.length + 2,
       text: data.message,
       sender: 'bot',
-    };
+      isHtml: true,    };
 
     setMessages((prev) => [...prev, botMessage]);
   };
 
   return (
-    <div className="flex flex-col h-screen">
-      <div className="flex-1 p-4 overflow-y-scroll">
+    <div className="flex flex-col h-screen chat-container ">
+      <header className="p-4 text-center font-bold">
+        <h1>Chatbot</h1>
+      </header>
+
+      <div className="flex-1 border-t p-4">
         {messages.map((msg) => (
           <Message key={msg.id} message={msg} />
         ))}
       </div>
+
       <ChatInput onSend={sendMessage} />
     </div>
   );
