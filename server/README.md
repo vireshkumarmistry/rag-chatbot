@@ -62,7 +62,7 @@ This functionality provides a highly interactive way for users to gain insights 
 
 ```bash
 git clone https://github.com/vireshkumarmistry/rag-chatbot
-cd rag-chatbot
+cd rag-chatbot/server/
 ```
 
 ### 2. Create a Python Virtual Environment

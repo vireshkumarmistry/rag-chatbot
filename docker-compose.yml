@@ -1,0 +1,24 @@
+services:
+  server:
+    image: server:latest
+    container_name: server
+    build:
+      context: ./server
+    volumes:
+      - ./server:/app
+    ports:
+      - "8000:8000"
+
+  client:
+    image: client:latest
+    container_name: client
+    build:
+      context: ./client
+    volumes:
+      - ./client:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+    depends_on:
+      - server

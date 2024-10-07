@@ -1,0 +1,16 @@
+# VSCode settings
+.vscode/
+.idea/
+
+# SQLite database file
+*.db
+
+# Docker
+*.log
+*.pid
+*.sock
+*.lock
+*.tmp
+
+# macOS
+.DS_Store
